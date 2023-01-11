@@ -1,22 +1,27 @@
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+
 import TreatmentRow from "../../components/mainPage/TreatmentRow";
 
 export default function MainPage() {
   return (
-    <Container>
-      <SideBar>
-        <header>Vanilla Hair Salon</header>
-        <nav>
-          <div>예약 현황</div>
-          <div>매출</div>
-        </nav>
-      </SideBar>
-      <Header>매출</Header>
-      <Main>
-        <TreatmentRow />
-        <TreatmentRow />
-      </Main>
-    </Container>
+    <>
+      <Container>
+        <SideBar>
+          <header>Vanilla Hair Salon</header>
+          <nav>
+            <div>예약 현황</div>
+            <div>매출</div>
+          </nav>
+        </SideBar>
+        <Header>매출</Header>
+        <Main>
+          <TreatmentRow />
+          <TreatmentRow />
+        </Main>
+      </Container>
+      <Outlet />
+    </>
   );
 }
 

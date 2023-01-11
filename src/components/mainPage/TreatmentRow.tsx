@@ -1,13 +1,19 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
 import StyledButton from "../common/StyledButton";
 
 export default function TreatmentRow() {
-  const handlePaymentModalOpen = () => {};
+  const navigate = useNavigate();
+
+  const handleOpenPaymentOverlay = (): void => {
+    navigate("/payment");
+  };
 
   return (
     <Container>
       TreatmentRow
-      <StyledButton text="결제 입력" onClick={handlePaymentModalOpen} />
+      <StyledButton text="결제 입력" onClick={handleOpenPaymentOverlay} />
     </Container>
   );
 }
