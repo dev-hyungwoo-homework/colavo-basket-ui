@@ -2,9 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import { ChildrenProp } from "../../config/type";
+import { ChildrenInterface } from "../../config/type";
 
-export default function OverlayBox({ children }: ChildrenProp): React.ReactElement {
+export default function OverlayBox({ children }: ChildrenInterface): React.ReactElement {
   const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const navigate = useNavigate();
 

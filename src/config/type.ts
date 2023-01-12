@@ -1,4 +1,4 @@
-export type ChildrenProp = {
+export interface ChildrenInterface {
   children?: React.ReactElement | React.ReactElement[];
 };
 
