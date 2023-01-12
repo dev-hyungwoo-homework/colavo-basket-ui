@@ -21,3 +21,5 @@ export type ResultType = {
     [key: string]: DiscountType;
   };
 };
+
+export type ChangeInputType = React.ChangeEvent<HTMLInputElement>;
