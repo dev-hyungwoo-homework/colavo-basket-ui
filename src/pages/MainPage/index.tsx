@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import TreatmentRow from "../../components/mainPage/TreatmentRow";
 
-export default function MainPage() {
+export default function MainPage(): React.ReactElement {
   return (
     <>
       <Container>

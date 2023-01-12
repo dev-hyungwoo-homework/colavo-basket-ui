@@ -2,11 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-type Props = {
-  children?: React.ReactNode;
-};
+import { ChildrenProp } from "../../config/type";
 
-export default function OverlayBox({ children }: Props) {
+export default function OverlayBox({ children }: ChildrenProp): React.ReactElement {
   const modalRef = useRef() as React.MutableRefObject<HTMLDivElement>;
   const navigate = useNavigate();
 
@@ -49,8 +47,8 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 500px;
-  height: 500px;
+  min-width: 600px;
+  min-height: 700px;
   border-radius: 10px;
   background-color: #ffffff;
 `;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import StyledButton from "../common/StyledButton";
 
-export default function TreatmentRow() {
+export default function TreatmentRow(): React.ReactElement {
   const navigate = useNavigate();
 
   const handleOpenPaymentOverlay = (): void => {
