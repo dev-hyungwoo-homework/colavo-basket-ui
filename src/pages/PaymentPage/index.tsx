@@ -13,23 +13,22 @@ import DiscountMenu from "../../components/menu/DiscountMenu";
 import useModal from "../../hooks/useModal";
 
 import { ItemStateType } from "../../config/type";
+import useTotalPrice from "../../hooks/useTotalPrice";
 
 export default function PaymentPage(): React.ReactElement {
   const [menuType, setMenuType] = useState<string>("");
-  const [confirmedItems, setConfirmedItems] = useState<Set<string>>(new Set());
-  const [confirmedItems2, setConfirmedItems2] = useState<ItemStateType>({});
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [confirmedItems, setConfirmedItems] = useState<ItemStateType>({});
 
   const { isOpen, toggleModal } = useModal();
+  const totalPrice = useTotalPrice(confirmedItems);
 
   const handleToggleModal = (type: string): void => {
     setMenuType(type);
     toggleModal();
   };
 
-  const handleConfirmSelectItems = (items: Set<string>, price: number): void => {
+  const handleConfirmSelectItems = (items: ItemStateType): void => {
     setConfirmedItems(items);
-    setTotalPrice(price);
     toggleModal();
   };
 
@@ -40,15 +39,17 @@ export default function PaymentPage(): React.ReactElement {
 
         <PaymentNavBar handleModal={handleToggleModal} />
 
-        <PaymentMain confirmedItems={confirmedItems} handleTotalPrice={setTotalPrice} />
+        <PaymentMain
+          confirmedItems={confirmedItems}
+          handleItemCount={setConfirmedItems}
+        />
 
         <PaymentFooter amount={totalPrice} />
 
-        <Modal isOpen={isOpen} handleClose={toggleModal} >
+        <Modal isOpen={isOpen} handleClose={toggleModal}>
           {menuType === "treatment" ? (
             <TreatmentMenu
               confirmedItems={confirmedItems}
-              totalPrice={totalPrice}
               handleClose={toggleModal}
               handleConfirm={handleConfirmSelectItems}
             />

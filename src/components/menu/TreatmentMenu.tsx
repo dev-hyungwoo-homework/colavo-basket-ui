@@ -4,27 +4,21 @@ import styled from "styled-components";
 import StyledButton from "../common/StyledButton";
 import MenuList from "./MenuList";
 
+import { ItemStateType } from "../../config/type";
+
 type Props = {
-  confirmedItems: Set<string>;
-  totalPrice: number;
+  confirmedItems: ItemStateType;
   handleClose: () => void;
-  handleConfirm: (items: Set<string>, price: number) => void;
+  handleConfirm: (items: ItemStateType) => void;
 };
 
 export default function TreatmentMenu({
   confirmedItems,
-  totalPrice,
   handleClose,
   handleConfirm,
 }: Props): React.ReactElement {
   const [currentCheckedItems, setCurrentCheckedItems] =
-    useState<Set<string>>(confirmedItems);
-  const [currentPriceSum, setcurrentPriceSum] = useState(totalPrice);
-
-  // console.log("결제페이지 최종 확정아이템");
-  // console.log(confirmedItems);
-  // console.log("현재 선택중인 아이템");
-  // console.log(currentCheckedItems);
+    useState<ItemStateType>(confirmedItems);
 
   const handleCloseMenu = (): void => {
     handleClose();
@@ -44,12 +38,11 @@ export default function TreatmentMenu({
           confirmedItems={confirmedItems}
           currentCheckedItems={currentCheckedItems}
           handleCheck={setCurrentCheckedItems}
-          handlePriceSum={setcurrentPriceSum}
         />
       </MainContainer>
       <Footer>
         <StyledButton
-          onClick={(): void => handleConfirm(currentCheckedItems, currentPriceSum)}
+          onClick={(): void => handleConfirm(currentCheckedItems)}
           type="button"
           text="저장"
         />

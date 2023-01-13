@@ -1,20 +1,20 @@
 import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import { ResultType } from "../../config/type";
+
 import MenuRow from "./MenuRow";
 
+import { ItemStateType, ResultType } from "../../config/type";
+
 type Props = {
-  confirmedItems: Set<string>;
-  currentCheckedItems: Set<string>;
-  handleCheck: React.Dispatch<React.SetStateAction<Set<string>>>;
-  handlePriceSum: React.Dispatch<React.SetStateAction<number>>;
+  confirmedItems: ItemStateType;
+  currentCheckedItems: ItemStateType;
+  handleCheck: React.Dispatch<React.SetStateAction<ItemStateType>>;
 };
 
 export default function MenuList({
   confirmedItems,
   currentCheckedItems,
   handleCheck,
-  handlePriceSum,
 }: Props): React.ReactElement {
   const { items } = useRouteLoaderData("main") as ResultType;
   const list: string[] = [];
@@ -25,23 +25,12 @@ export default function MenuList({
 
   const handleCheckItem = (id: string, isChecked: boolean): void => {
     if (isChecked) {
-      handleCheck((prev) => {
-        const prevSet = new Set(prev);
-        prevSet.add(id)
+      handleCheck((prev) => ({ ...prev, [id]: 1 }));
+    } else if (!isChecked && currentCheckedItems.hasOwnProperty(id)) {
+      const copiedState = { ...currentCheckedItems };
+      delete copiedState[id];
 
-        return prevSet;
-      });
-
-      handlePriceSum((prev) => prev + items[id].price);
-    } else if (!isChecked && currentCheckedItems.has(id)) {
-      handleCheck((prev) => {
-        const prevSet = new Set(prev);
-        prevSet.delete(id)
-
-        return prevSet;
-      });
-
-      handlePriceSum((prev) => prev - items[id].price);
+      handleCheck(copiedState);
     }
   };
 
@@ -53,7 +42,7 @@ export default function MenuList({
           itemId={id}
           itemDetail={items[id]}
           handleCheck={handleCheckItem}
-          initialCheckStaus={confirmedItems.has(id) ? true : false}
+          initialCheckStaus={confirmedItems.hasOwnProperty(id) ? true : false}
         />
       ))}
     </>

@@ -1,34 +1,54 @@
-import React, { useState } from "react";
 import styled from "styled-components";
-import { ItemType } from "../../config/type";
+
+import { ItemStateType, ItemType } from "../../config/type";
 
 type Props = {
+  id: string;
   detail: ItemType;
-  calculatePrice: React.Dispatch<React.SetStateAction<number>>;
+  prevCount: number;
+  handleItemCount: React.Dispatch<React.SetStateAction<ItemStateType>>;
 };
 
-export default function ItemRow({ detail, calculatePrice }: Props): React.ReactElement {
-  const [count, setCount] = useState(1);
+export default function ItemRow({
+  id,
+  detail,
+  prevCount,
+  handleItemCount,
+}: Props): React.ReactElement {
+  // TODO: 로직이 많이 중복된다..뭔가 하나로 만들 수 있을 것 같은데.. 고민해보기!
 
   const handleDecrease = (): void => {
-    setCount((prev) => prev - 1);
-    calculatePrice((prev) => prev - detail.price);
+    handleItemCount((prev) => {
+      if (prev[id] <= 1) return prev;
+
+      const copiedState = { ...prev };
+      copiedState[id] -= 1;
+
+      return copiedState;
+    });
   };
   const handleIncrease = (): void => {
-    setCount((prev) => prev + 1);
-    calculatePrice((prev) => prev + detail.price);
-  };
+    handleItemCount((prev) => {
+      if (prev[id] >= 99) return prev;
 
+      const copiedState = { ...prev };
+      copiedState[id] += 1;
+
+      return copiedState;
+    });
+  };
 
   return (
     <Container>
       <TextContainer>
         <p>{detail.name}</p>
-        <p>{detail.price * count}원</p>
+        <p>{detail.price * prevCount}원</p>
       </TextContainer>
       <div>
-        <button type="button" onClick={handleDecrease}>-</button>
-        {count}
+        <button type="button" onClick={handleDecrease}>
+          -
+        </button>
+        {prevCount}
         <button type="button" onClick={handleIncrease}>
           +
         </button>
