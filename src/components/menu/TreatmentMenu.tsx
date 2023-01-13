@@ -4,43 +4,52 @@ import styled from "styled-components";
 import StyledButton from "../common/StyledButton";
 import MenuList from "./MenuList";
 
-import { ItemType } from "../../config/type";
-
 type Props = {
-  totalItems: { [key: string]: ItemType };
   confirmedItems: Set<string>;
+  totalPrice: number;
   handleClose: () => void;
-  handleConfirm: (itemsSet: Set<string>) => void;
+  handleConfirm: (items: Set<string>, price: number) => void;
 };
 
 export default function TreatmentMenu({
-  totalItems,
   confirmedItems,
+  totalPrice,
   handleClose,
   handleConfirm,
 }: Props): React.ReactElement {
   const [currentCheckedItems, setCurrentCheckedItems] =
     useState<Set<string>>(confirmedItems);
+  const [currentPriceSum, setcurrentPriceSum] = useState(totalPrice);
+
+  // console.log("결제페이지 최종 확정아이템");
+  // console.log(confirmedItems);
+  // console.log("현재 선택중인 아이템");
+  // console.log(currentCheckedItems);
+
+  const handleCloseMenu = (): void => {
+    handleClose();
+    setCurrentCheckedItems(confirmedItems);
+  };
 
   return (
     <Container>
       <Header>
-        <button type="button" onClick={handleClose}>
+        <button type="button" onClick={handleCloseMenu}>
           X
         </button>
         <h2>시술 메뉴</h2>
       </Header>
       <MainContainer>
         <MenuList
-          listData={totalItems}
           confirmedItems={confirmedItems}
           currentCheckedItems={currentCheckedItems}
           handleCheck={setCurrentCheckedItems}
+          handlePriceSum={setcurrentPriceSum}
         />
       </MainContainer>
       <Footer>
         <StyledButton
-          onClick={(): void => handleConfirm(currentCheckedItems)}
+          onClick={(): void => handleConfirm(currentCheckedItems, currentPriceSum)}
           type="button"
           text="저장"
         />

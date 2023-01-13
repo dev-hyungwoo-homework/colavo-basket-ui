@@ -23,3 +23,11 @@ export type ResultType = {
 };
 
 export type ChangeInputType = React.ChangeEvent<HTMLInputElement>;
+
+export type ItemStateType = {
+  [key: string]: number;
+};
+
+export type DiscountStateType = {
+  [key: string]: Set<string>;
+};

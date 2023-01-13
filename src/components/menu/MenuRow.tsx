@@ -5,14 +5,14 @@ import { ChangeInputType, ItemType } from "../../config/type";
 
 type Props = {
   itemId: string;
-  item: ItemType;
+  itemDetail: ItemType;
   handleCheck: (itemId: string, isChecked: boolean) => void;
   initialCheckStaus: boolean;
 };
 
 export default function MenuRow({
   itemId,
-  item,
+  itemDetail,
   handleCheck,
   initialCheckStaus = false,
 }: Props): React.ReactElement {
@@ -28,8 +28,8 @@ export default function MenuRow({
   return (
     <Container>
       <NameWrapper>
-        <Name>{item.name}</Name>
-        <Price>{item.price}원</Price>
+        <Name>{itemDetail.name}</Name>
+        <Price>{itemDetail.price}원</Price>
       </NameWrapper>
       <InputWrapper>
         <Input

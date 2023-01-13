@@ -6,7 +6,7 @@ import Portal from "./Portal";
 
 interface Props extends ChildrenInterface {
   isOpen: boolean;
-  handleClose: () => void;
+  handleClose?: () => void;
 };
 
 export default function Modal({

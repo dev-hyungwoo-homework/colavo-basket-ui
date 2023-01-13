@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
 
 import OverlayBox from "../../components/common/OverlayBox";
@@ -13,25 +12,24 @@ import DiscountMenu from "../../components/menu/DiscountMenu";
 
 import useModal from "../../hooks/useModal";
 
-import { ResultType } from "../../config/type";
+import { ItemStateType } from "../../config/type";
 
 export default function PaymentPage(): React.ReactElement {
   const [menuType, setMenuType] = useState<string>("");
-  const [totalPayment, setTotalPayment] = useState(50000);
-
   const [confirmedItems, setConfirmedItems] = useState<Set<string>>(new Set());
+  const [confirmedItems2, setConfirmedItems2] = useState<ItemStateType>({});
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const { isOpen, toggleModal } = useModal();
-
-  const { items, discounts } = useRouteLoaderData("main") as ResultType;
 
   const handleToggleModal = (type: string): void => {
     setMenuType(type);
     toggleModal();
   };
 
-  const handleConfirmSelectItems = (itemsSet: Set<string>): void => {
-    setConfirmedItems(itemsSet);
+  const handleConfirmSelectItems = (items: Set<string>, price: number): void => {
+    setConfirmedItems(items);
+    setTotalPrice(price);
     toggleModal();
   };
 
@@ -42,15 +40,15 @@ export default function PaymentPage(): React.ReactElement {
 
         <PaymentNavBar handleModal={handleToggleModal} />
 
-        <PaymentMain confirmedItems={confirmedItems} />
+        <PaymentMain confirmedItems={confirmedItems} handleTotalPrice={setTotalPrice} />
 
-        <PaymentFooter amount={totalPayment} />
+        <PaymentFooter amount={totalPrice} />
 
-        <Modal isOpen={isOpen} handleClose={toggleModal}>
+        <Modal isOpen={isOpen} handleClose={toggleModal} >
           {menuType === "treatment" ? (
             <TreatmentMenu
-              totalItems={items}
               confirmedItems={confirmedItems}
+              totalPrice={totalPrice}
               handleClose={toggleModal}
               handleConfirm={handleConfirmSelectItems}
             />

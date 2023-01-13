@@ -1,33 +1,47 @@
 import React from "react";
-import { ItemType } from "../../config/type";
+import { useRouteLoaderData } from "react-router-dom";
+import { ResultType } from "../../config/type";
 import MenuRow from "./MenuRow";
 
 type Props = {
-  listData: { [key: string]: ItemType };
   confirmedItems: Set<string>;
   currentCheckedItems: Set<string>;
   handleCheck: React.Dispatch<React.SetStateAction<Set<string>>>;
+  handlePriceSum: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export default function MenuList({
-  listData,
   confirmedItems,
   currentCheckedItems,
   handleCheck,
+  handlePriceSum,
 }: Props): React.ReactElement {
+  const { items } = useRouteLoaderData("main") as ResultType;
   const list: string[] = [];
 
-  for (const id of Object.keys(listData)) {
+  for (const id of Object.keys(items)) {
     list.push(id);
   }
 
   const handleCheckItem = (id: string, isChecked: boolean): void => {
     if (isChecked) {
-      currentCheckedItems.add(id);
-      handleCheck(currentCheckedItems);
+      handleCheck((prev) => {
+        const prevSet = new Set(prev);
+        prevSet.add(id)
+
+        return prevSet;
+      });
+
+      handlePriceSum((prev) => prev + items[id].price);
     } else if (!isChecked && currentCheckedItems.has(id)) {
-      currentCheckedItems.delete(id);
-      handleCheck(currentCheckedItems);
+      handleCheck((prev) => {
+        const prevSet = new Set(prev);
+        prevSet.delete(id)
+
+        return prevSet;
+      });
+
+      handlePriceSum((prev) => prev - items[id].price);
     }
   };
 
@@ -37,7 +51,7 @@ export default function MenuList({
         <MenuRow
           key={id}
           itemId={id}
-          item={listData[id]}
+          itemDetail={items[id]}
           handleCheck={handleCheckItem}
           initialCheckStaus={confirmedItems.has(id) ? true : false}
         />
