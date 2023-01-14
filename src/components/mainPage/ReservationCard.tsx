@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import StyledButton from "../common/StyledButton";
 
-export default function TreatmentRow(): React.ReactElement {
+export default function ReservationCard(): React.ReactElement {
   const navigate = useNavigate();
 
   const handleOpenPaymentOverlay = (): void => {
@@ -12,7 +12,7 @@ export default function TreatmentRow(): React.ReactElement {
 
   return (
     <Container>
-      TreatmentRow
+      <p>예약자 : 안형우 님 (2023 / 1 / 14)</p>
       <StyledButton text="결제 입력" onClick={handleOpenPaymentOverlay} />
     </Container>
   );

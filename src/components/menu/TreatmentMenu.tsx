@@ -1,74 +1,57 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { useRouteLoaderData } from "react-router-dom";
 
-import StyledButton from "../common/StyledButton";
-import MenuList from "./MenuList";
+import MenuContainer from "./shared/MenuContainer";
+import TreatmentRow from "./TreatmentRow";
 
-import { ItemStateType } from "../../config/type";
+import { ItemStateType, ResultType } from "../../config/type";
 
 type Props = {
-  confirmedItems: ItemStateType;
-  handleClose: () => void;
-  handleConfirm: (items: ItemStateType) => void;
+  savedItems: ItemStateType;
+  onSaveItems: (items: ItemStateType) => void;
+  onCloseModal: () => void;
 };
 
 export default function TreatmentMenu({
-  confirmedItems,
-  handleClose,
-  handleConfirm,
+  savedItems,
+  onSaveItems,
+  onCloseModal,
 }: Props): React.ReactElement {
-  const [currentCheckedItems, setCurrentCheckedItems] =
-    useState<ItemStateType>(confirmedItems);
+  const [checkedItems, setCheckedItems] = useState<ItemStateType>(savedItems);
+
+  const { items } = useRouteLoaderData("main") as ResultType;
 
   const handleCloseMenu = (): void => {
-    handleClose();
-    setCurrentCheckedItems(confirmedItems);
+    onCloseModal();
+    setCheckedItems(savedItems);
+  };
+
+  const handleCheckItem = (id: string, isChecked: boolean): void => {
+    if (isChecked) {
+      setCheckedItems((prev) => ({ ...prev, [id]: items[id] }));
+    } else if (!isChecked && checkedItems.hasOwnProperty(id)) {
+      const copiedState = { ...checkedItems };
+      delete copiedState[id];
+
+      setCheckedItems(copiedState);
+    }
   };
 
   return (
-    <Container>
-      <Header>
-        <button type="button" onClick={handleCloseMenu}>
-          X
-        </button>
-        <h2>시술 메뉴</h2>
-      </Header>
-      <MainContainer>
-        <MenuList
-          confirmedItems={confirmedItems}
-          currentCheckedItems={currentCheckedItems}
-          handleCheck={setCurrentCheckedItems}
+    <MenuContainer
+      title="시술 메뉴"
+      onClickCloseButton={handleCloseMenu}
+      onSaveData={(): void => onSaveItems(checkedItems)}
+    >
+      {Object.keys(items).map((id) => (
+        <TreatmentRow
+          key={id}
+          id={id}
+          detail={items[id]}
+          handleCheck={handleCheckItem}
+          initialCheckStaus={savedItems.hasOwnProperty(id) ? true : false}
         />
-      </MainContainer>
-      <Footer>
-        <StyledButton
-          onClick={(): void => handleConfirm(currentCheckedItems)}
-          type="button"
-          text="저장"
-        />
-      </Footer>
-    </Container>
+      ))}
+    </MenuContainer>
   );
 }
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  min-height: 600px;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const MainContainer = styled.main`
-  height: 500px;
-  overflow: scroll;
-`;
-
-const Footer = styled.footer`
-  display: flex;
-  flex-direction: column;
-`;

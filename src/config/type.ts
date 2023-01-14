@@ -1,6 +1,6 @@
 export interface ChildrenInterface {
   children?: React.ReactElement | React.ReactElement[];
-};
+}
 
 export type ItemType = {
   count: number;
@@ -25,9 +25,13 @@ export type ResultType = {
 export type ChangeInputType = React.ChangeEvent<HTMLInputElement>;
 
 export type ItemStateType = {
-  [key: string]: number;
+  [key: string]: ItemType;
 };
 
 export type DiscountStateType = {
+  [key: string]: DiscountType;
+};
+
+export type DiscountedItemsStateType = {
   [key: string]: Set<string>;
 };

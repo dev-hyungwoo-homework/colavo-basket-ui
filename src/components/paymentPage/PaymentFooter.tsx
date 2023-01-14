@@ -7,7 +7,12 @@ type Props = {
 };
 
 export default function PaymentFooter({ amount }: Props): React.ReactElement {
-  const handleClick = (): void => console.log("click!");
+  const handleClick = (): void => {
+    alert(`
+      부족한 작업물 봐주셔서 진심으로 감사드립니다!
+      좋은 하루 되세요 :)
+    `);
+  };
 
   return (
     <FooterContainer>
@@ -28,4 +33,5 @@ const FooterContainer = styled.footer`
 const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  font-size: 26px;
 `;

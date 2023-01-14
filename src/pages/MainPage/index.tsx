@@ -1,23 +1,18 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
-import TreatmentRow from "../../components/mainPage/TreatmentRow";
+import ReservationCard from "../../components/mainPage/ReservationCard";
 
 export default function MainPage(): React.ReactElement {
   return (
     <>
       <Container>
         <SideBar>
-          <header>Vanilla Hair Salon</header>
-          <nav>
-            <div>예약 현황</div>
-            <div>매출</div>
-          </nav>
+          <SidebarHeader>Vanilla Hair Salon</SidebarHeader>
         </SideBar>
         <Header>매출</Header>
         <Main>
-          <TreatmentRow />
-          <TreatmentRow />
+          <ReservationCard />
         </Main>
       </Container>
       <Outlet />
@@ -40,6 +35,12 @@ const SideBar = styled.aside`
   grid-area: side;
   background-color: #0040ff;
   color: white;
+`;
+
+const SidebarHeader = styled.div`
+  text-align: center;
+  margin-top: 28px;
+  font-size: 28px;
 `;
 
 const Header = styled.header`

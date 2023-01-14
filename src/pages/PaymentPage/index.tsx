@@ -11,24 +11,46 @@ import TreatmentMenu from "../../components/menu/TreatmentMenu";
 import DiscountMenu from "../../components/menu/DiscountMenu";
 
 import useModal from "../../hooks/useModal";
+import calculateTotalPrice from "../../utils/calculateTotalPrice";
 
-import { ItemStateType } from "../../config/type";
-import useTotalPrice from "../../hooks/useTotalPrice";
+import { DiscountedItemsStateType, DiscountStateType, ItemStateType } from "../../config/type";
 
 export default function PaymentPage(): React.ReactElement {
   const [menuType, setMenuType] = useState<string>("");
-  const [confirmedItems, setConfirmedItems] = useState<ItemStateType>({});
+  const [savedItems, setSavedItems] = useState<ItemStateType>({});
+  const [savedDiscounts, setSavedDiscounts] = useState<DiscountStateType>({});
+  const [discountedItems, setDiscountedItems] = useState<DiscountedItemsStateType>({});
 
+  const totalPrice = calculateTotalPrice(savedItems, savedDiscounts, discountedItems);
   const { isOpen, toggleModal } = useModal();
-  const totalPrice = useTotalPrice(confirmedItems);
 
   const handleToggleModal = (type: string): void => {
     setMenuType(type);
     toggleModal();
   };
 
-  const handleConfirmSelectItems = (items: ItemStateType): void => {
-    setConfirmedItems(items);
+  const handleSaveItems = (items: ItemStateType): void => {
+    const newSet = new Set(Object.keys(items));
+    const newDiscountedItems: DiscountedItemsStateType = {};
+
+    for (const key of Object.keys(discountedItems)) {
+      newDiscountedItems[key] = newSet;
+    }
+
+    setSavedItems(items);
+    setDiscountedItems(newDiscountedItems);
+    toggleModal();
+  };
+
+  const handleSaveDiscounts = (discounts: DiscountStateType, discountIds: Set<string>): void => {
+    const newDiscountedItems: DiscountedItemsStateType = {};
+
+    discountIds.forEach((id) => {
+      newDiscountedItems[id] = new Set(Object.keys(savedItems));
+    });
+
+    setSavedDiscounts(discounts);
+    setDiscountedItems(newDiscountedItems);
     toggleModal();
   };
 
@@ -36,25 +58,29 @@ export default function PaymentPage(): React.ReactElement {
     <OverlayBox>
       <Container>
         <PaymentHeader />
-
         <PaymentNavBar handleModal={handleToggleModal} />
-
         <PaymentMain
-          confirmedItems={confirmedItems}
-          handleItemCount={setConfirmedItems}
+          savedItems={savedItems}
+          savedDiscounts={savedDiscounts}
+          discountedItems={discountedItems}
+          onChangeItem={setSavedItems}
+          onChangeDiscount={setSavedDiscounts}
+          onChangeDiscountedItems={setDiscountedItems}
         />
-
         <PaymentFooter amount={totalPrice} />
-
         <Modal isOpen={isOpen} handleClose={toggleModal}>
           {menuType === "treatment" ? (
             <TreatmentMenu
-              confirmedItems={confirmedItems}
-              handleClose={toggleModal}
-              handleConfirm={handleConfirmSelectItems}
+              savedItems={savedItems}
+              onSaveItems={handleSaveItems}
+              onCloseModal={toggleModal}
             />
           ) : (
-            <DiscountMenu />
+            <DiscountMenu
+              savedDiscounts={savedDiscounts}
+              onSaveDiscounts={handleSaveDiscounts}
+              onCloseModal={toggleModal}
+            />
           )}
         </Modal>
       </Container>
