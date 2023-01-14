@@ -1,6 +1,6 @@
 {
   "name": "colavo-basket-ui",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "private": true,
   "author": "Hyungwoo An <dev.hyungwoo@gmail.com>",
   "dependencies": {
