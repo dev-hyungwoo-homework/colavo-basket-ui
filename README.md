@@ -33,6 +33,14 @@
 <details>
   <summary>How to run it</summary>
 
+  - 사전에 환경변수 파일을 생성 후, 아래의 정보를 입력해주세요.
+  - 원래 환율 조회 API도 입력이 필요하나, 현재 정상적이지 않은 동작으로 지속적으로 문제를 겪어, 임시로 외부 요청 없는 로직의 상태로 구현해 두었습니다.
+
+  ```
+  REACT_APP_API_URL=https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData`
+
+  ```
+
   - 아래의 순서에 따라, 프로젝트를 clone 받은 후 프로젝트 디렉토리 내에서 명령어를 실행하시면 됩니다.
 
   ```
