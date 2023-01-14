@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import { ChangeInputType, ItemType } from "../../config/type";
 import RowContainer from "./shared/RowContainer";
+
+import { ChangeInputType, ItemType } from "../../config/type";
 
 type Props = {
   id: string;

@@ -9,8 +9,6 @@ export default function OverlayBox({ children }: ChildrenInterface): React.React
   const navigate = useNavigate();
 
   useEffect(() => {
-    // TODO: 추후 커스텀훅으로 분리해보기! useClickOutside
-
     const handleClickOutside = (event: MouseEvent): void => {
       event.preventDefault();
 

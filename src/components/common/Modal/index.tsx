@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { ChildrenInterface } from "../../../config/type";
 
 import Portal from "./Portal";
+
+import { ChildrenInterface } from "../../../config/type";
 
 interface Props extends ChildrenInterface {
   isOpen: boolean;

@@ -19,7 +19,6 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
-    // "no-unused-vars": "error",
     "no-empty-function": "off",
     "no-prototype-builtins": "off",
     "react/jsx-uses-react": "off",

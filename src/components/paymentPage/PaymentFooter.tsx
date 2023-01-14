@@ -1,9 +1,12 @@
 import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
-import { ResultType } from "../../config/type";
-import applyCurrencyCode from "../../utils/applyCurrencyCode";
 
 import StyledButton from "../common/StyledButton";
+
+import applyCurrencyCode from "../../utils/applyCurrencyCode";
+
+import { ResultType } from "../../config/type";
+
 
 type Props = {
   totalPrice: number;

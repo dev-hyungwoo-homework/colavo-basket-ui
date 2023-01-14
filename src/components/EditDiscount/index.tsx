@@ -14,7 +14,6 @@ import {
 type Props = {
   discountedItems: DiscountedItemsStateType;
   editTargetId: string;
-
   onChangeDiscountedItems: React.Dispatch<React.SetStateAction<DiscountedItemsStateType>>;
   savedItemsList: [string, ItemType][];
   savedDiscounts: DiscountStateType;
@@ -27,7 +26,6 @@ type Props = {
 export default function EditDiscount({
   discountedItems,
   editTargetId,
-
   savedItemsList,
   discountData,
   onSaveDiscountItem,
