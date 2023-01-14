@@ -1,12 +1,19 @@
+import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
+import { ResultType } from "../../config/type";
+import applyCurrencyCode from "../../utils/applyCurrencyCode";
 
 import StyledButton from "../common/StyledButton";
 
 type Props = {
-  amount: number;
+  totalPrice: number;
 };
 
-export default function PaymentFooter({ amount }: Props): React.ReactElement {
+export default function PaymentFooter({ totalPrice }: Props): React.ReactElement {
+  const { currency_code } = useRouteLoaderData("main") as ResultType;
+
+  const currencyAppliedPrice = applyCurrencyCode(currency_code, totalPrice);
+
   const handleClick = (): void => {
     alert(`
       부족한 작업물 봐주셔서 진심으로 감사드립니다!
@@ -18,7 +25,7 @@ export default function PaymentFooter({ amount }: Props): React.ReactElement {
     <FooterContainer>
       <PriceContainer>
         <p>합계</p>
-        <p>{`${amount}원`}</p>
+        <p>{`${currencyAppliedPrice}${currency_code === "KRW" ? "원" : "USD"}`}</p>
       </PriceContainer>
       <StyledButton text="다음" onClick={handleClick} />
     </FooterContainer>

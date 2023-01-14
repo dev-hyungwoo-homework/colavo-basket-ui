@@ -13,6 +13,14 @@ const mainLoader = async (): Promise<ResultType> => {
   return data;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const currencyLoader = async (): Promise<any> => {
+  const result = await fetch(process.env.REACT_APP_CURRENCY_FREAKS_API_URL as string);
+  const data = await result.json();
+
+  return data;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -23,6 +31,7 @@ const router = createBrowserRouter([
       {
         path: "payment",
         element: <PaymentPage />,
+        loader: currencyLoader,
       },
     ],
   },

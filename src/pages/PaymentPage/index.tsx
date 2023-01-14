@@ -67,7 +67,7 @@ export default function PaymentPage(): React.ReactElement {
           onChangeDiscount={setSavedDiscounts}
           onChangeDiscountedItems={setDiscountedItems}
         />
-        <PaymentFooter amount={totalPrice} />
+        <PaymentFooter totalPrice={totalPrice} />
         <Modal isOpen={isOpen} handleClose={toggleModal}>
           {menuType === "treatment" ? (
             <TreatmentMenu

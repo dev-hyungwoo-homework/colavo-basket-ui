@@ -20,6 +20,7 @@ export type ResultType = {
   discounts: {
     [key: string]: DiscountType;
   };
+  currency_code: string;
 };
 
 export type ChangeInputType = React.ChangeEvent<HTMLInputElement>;
