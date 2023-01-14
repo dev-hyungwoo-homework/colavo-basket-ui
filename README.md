@@ -26,7 +26,6 @@
   - React
   - React-router
   - Styled-components
-  - React-app-rewired
 
 </details>
 
