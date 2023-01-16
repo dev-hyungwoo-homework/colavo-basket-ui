@@ -36,7 +36,7 @@
   - 원래 환율 조회 API도 입력이 필요하나, 현재 정상적이지 않은 동작으로 지속적으로 문제를 겪어, 임시로 외부 요청 없는 로직의 상태로 구현해 두었습니다.
 
   ```
-  REACT_APP_API_URL=https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData`
+  REACT_APP_API_URL=https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData
 
   ```
 
